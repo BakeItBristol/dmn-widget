@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DMN Widget</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <title>DMN Booking Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
   <style>
-    html, body { margin: 0; padding: 0; box-sizing: border-box; height: 100%; overflow: hidden; }
-    #container { width: 100vw; min-height: 100vh; overflow: hidden; position: relative; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: auto;
+      overflow-x: hidden;
+      background-color: #fff;
+    }
+
+    .dmn-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      .dmn-container {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div id="container">
+  <div class="dmn-container">
     <script
+      type="text/javascript"
       src="https://widgets.designmynight.com/tonic/ticket-widget-v2.min.js?item-ids=681a70d10d01774a08419168&theme=custom&primary=FFADAD&primaryLight=FFFAD7&secondary=FFA940&secondaryLight=F9F9FA&shade1=F9F9FA&shade2="
       data-dmn-ticket-widget="true">
     </script>
   </div>
-
-  <script>
-    function sendHeight() {
-      const el = document.getElementById('container');
-      const height = el.scrollHeight;
-      parent.postMessage({ type: 'dmn_height', height }, '*');
-    }
-
-    // Send initial height after gold load
-    window.addEventListener('load', () => {
-      sendHeight();
-      // Re-check after widget renders content
-      setTimeout(sendHeight, 1500);
-    });
-
-    // Also monitor changes (in case of tab switches inside widget)
-    const observer = new MutationObserver(sendHeight);
-    observer.observe(document.getElementById('container'), { childList: true, subtree: true });
-  </script>
 </body>
 </html>
