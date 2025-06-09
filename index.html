@@ -2,53 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DMN Booking Widget</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>DMN Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: #fff;
       width: 100%;
       height: 100%;
-      box-sizing: border-box;
       overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+      box-sizing: border-box;
     }
-
     #wrapper {
       width: 100%;
-      max-width: 100%;
+      max-width: 600px;
       margin: 0 auto;
-      overflow: hidden;
-      padding: 0;
-    }
-
-    script {
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-
-    /* Prevent internal zoom scaling inside inputs */
-    input, select, textarea {
-      font-size: 16px !important;
-    }
-
-    @media screen and (max-width: 768px) {
-      #wrapper {
-        padding: 0 8px;
-      }
+      padding: 0 10px;
     }
   </style>
 </head>
 <body>
   <div id="wrapper">
     <script
-      type="text/javascript"
       src="https://widgets.designmynight.com/tonic/ticket-widget-v2.min.js?item-ids=681a70d10d01774a08419168&theme=custom&primary=FFADAD&primaryLight=FFFAD7&secondary=FFA940&secondaryLight=F9F9FA&shade1=F9F9FA&shade2="
       data-dmn-ticket-widget="true">
     </script>
   </div>
+
+  <script>
+    function sendHeight() {
+      const height = document.body.scrollHeight;
+      parent.postMessage({ type: \"dmn_height\", height: height }, \"*\");
+    }
+
+    window.onload = () => {
+      sendHeight();
+      setTimeout(sendHeight, 1000);
+    };
+
+    const observer = new MutationObserver(sendHeight);
+    observer.observe(document.getElementById('wrapper'), { childList: true, subtree: true });
+  </script>
 </body>
 </html>
