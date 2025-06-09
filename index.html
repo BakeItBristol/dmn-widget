@@ -40,8 +40,8 @@
   <script>
     function sendHeight() {
       const container = document.body;
-      const height = container.scrollHeight;
-      parent.postMessage({ type: 'dmn_height', height: height }, '*');
+      const cappedHeight = Math.min(height, 1400);
+parent.postMessage({ type: 'dmn_height', height: cappedHeight }, '*');
     }
 
     window.addEventListener('load', () => {
